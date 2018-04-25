@@ -362,6 +362,7 @@ func (c *client) createLinux(id string, spec *specs.Spec, runtimeOptions interfa
 		ContainerType: "linux",
 		Owner:         defaultOwner,
 		TerminateOnLastHandleClosed: true,
+		MemoryMaximumInMB: 4096,
 	}
 
 	if lcowConfig.ActualMode == opengcs.ModeActualVhdx {
