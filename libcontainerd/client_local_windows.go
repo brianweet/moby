@@ -174,6 +174,7 @@ func (c *client) createWindows(id string, spec *specs.Spec, runtimeOptions inter
 		IgnoreFlushesDuringBoot: spec.Windows.IgnoreFlushesDuringBoot,
 		HostName:                spec.Hostname,
 		HvPartition:             false,
+	    MemoryMaximumInMB:		 4096,
 	}
 
 	c.extractResourcesFromSpec(spec, configuration)
@@ -373,6 +374,7 @@ func (c *client) createLinux(id string, spec *specs.Spec, runtimeOptions interfa
 		ContainerType:               "linux",
 		Owner:                       defaultOwner,
 		TerminateOnLastHandleClosed: true,
+		MemoryMaximumInMB:			 4096,
 	}
 
 	if lcowConfig.ActualMode == opengcs.ModeActualVhdx {
@@ -599,11 +601,11 @@ func (c *client) extractResourcesFromSpec(spec *specs.Spec, configuration *hcssh
 				configuration.ProcessorMaximum = int64(*spec.Windows.Resources.CPU.Maximum)
 			}
 		}
-		if spec.Windows.Resources.Memory != nil {
-			if spec.Windows.Resources.Memory.Limit != nil {
-				configuration.MemoryMaximumInMB = int64(*spec.Windows.Resources.Memory.Limit) / 1024 / 1024
-			}
-		}
+		// if spec.Windows.Resources.Memory != nil {
+		// 	if spec.Windows.Resources.Memory.Limit != nil {
+		// 		configuration.MemoryMaximumInMB = int64(*spec.Windows.Resources.Memory.Limit) / 1024 / 1024
+		// 	}
+		// }
 	}
 }
 
